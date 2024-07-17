@@ -1,7 +1,8 @@
+import gleam/io
 import wechat/object.{type JsObject}
 
-fn on_load(_o: JsObject) -> Nil {
-  Nil
+fn on_load(o: JsObject) -> Nil {
+  o |> object.stringify |> io.println
 }
 
 fn on_show() -> Nil {
