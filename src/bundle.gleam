@@ -1,4 +1,8 @@
+import gleam/list
+import gleam/result
 import wechat/object.{type JsObject}
+import wechat/page.{run_page}
+import wechat/app as weapp
 
 import app/app
 import app/pages/index/index
@@ -6,8 +10,8 @@ import app/components/basic/basic
 
 pub type Constructor = fn() -> JsObject
 
-pub fn app() -> Constructor {
-  app.app
+pub fn app() -> Result(Nil, Nil) {
+  app.app() |> weapp.run_app |> Ok
 }
 
 pub fn pages() -> List(#(String, Constructor)) {
@@ -16,4 +20,10 @@ pub fn pages() -> List(#(String, Constructor)) {
 
 pub fn components() -> List(#(String, Constructor)) {
   [#("basic", basic.component)]
+}
+
+pub fn page(ps: List(#(String, Constructor)), p: String) -> Result(Nil, Nil) {
+  ps
+  |> list.find(fn(px) { px.0 == p })
+  |> result.try(fn(px) { px.1() |> run_page |> Ok})
 }
