@@ -1,9 +1,9 @@
 import esgleam
-// import app/app
+// import bundle
 
 pub fn main() {
   esgleam.new("./dist")
-  |> esgleam.entry("app/app.gleam")
+  |> esgleam.entry("bundle.gleam")
   // |> esgleam.minify(True)
   |> esgleam.bundle
 }
