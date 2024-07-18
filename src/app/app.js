@@ -1,3 +1,3 @@
-import { app } from './app.mjs'
+import { app } from './app/app.mjs'
 
 App(app())
