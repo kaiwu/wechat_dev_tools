@@ -4,12 +4,15 @@ import wechat/object.{type JsObject}
 import app/pages/index/index
 import app/components/basic/basic
 
-pub fn exports() -> JsObject {
-  object.literal([
-    #("index.page", index.page),
-    #("basic.component", basic.component),
-  ])
-} 
+pub type Constructor = fn() -> JsObject
+
+pub fn pages() -> List(#(String, Constructor)) {
+  [#("index", index.page)]
+}
+
+pub fn components() -> List(#(String, Constructor)) {
+  [#("basic", basic.component)]
+}
 
 fn on_launch(o: JsObject) -> Nil {
   o |> object.stringify |> string.append("gleam app: ", _) |> io.println

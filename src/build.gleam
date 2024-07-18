@@ -1,6 +1,9 @@
-import gleam/io
 import esgleam
+// import app/app
 
 pub fn main() {
-  io.println("Hello from wechat_dev_tools!")
+  esgleam.new("./dist")
+  |> esgleam.entry("app/app.gleam")
+  // |> esgleam.minify(True)
+  |> esgleam.bundle
 }
