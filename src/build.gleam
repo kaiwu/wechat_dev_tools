@@ -32,9 +32,21 @@ fn file_path(path: String, p: String, t: String) -> String {
   string.concat([ path, p, "/", p, ".", t, ])
 }
 
+fn index_path(path: String, p: String, t: String) -> String {
+  string.concat([ path, p, "/", "index.", t, ])
+}
+
 fn page_content(p: String) -> String {
   string.concat([
     "import { pages, page } from '../../bundle.mjs'; page(pages(), \"",
+    p,
+    "\")",
+  ])
+}
+
+fn component_content(p: String) -> String {
+  string.concat([
+    "import { components, component } from '../../bundle.mjs'; component(components(), \"",
     p,
     "\")",
   ])
@@ -63,6 +75,19 @@ fn pages_assets() -> List(Asset) {
   |> list.flat_map(fn(p) { page_assets(p) })
 }
 
+fn component_assets(p: String) -> List(Asset) {
+  [ Asset(component_content(p), index_path(dist <> "/components/", p, "js"), js_build),
+    Asset(file_path(src <> "/components/", p, "json"), index_path(dist <> "/components/", p, "json"), copy_build),
+    Asset(file_path(src <> "/components/", p, "wxml"), index_path(dist <> "/components/", p, "wxml"), copy_build),
+    Asset(file_path(src <> "/components/", p, "less"), index_path(dist <> "/components/", p, "wxss"), less_build) ]
+}
+
+fn components_assets() -> List(Asset) {
+  bundle.components()
+  |> list.map(fn(p) { p.0 })
+  |> list.flat_map(fn(p) { component_assets(p) })
+}
+
 fn fold_result(r0: Result(Nil, String), r: Result(Nil, String)) -> Result(Nil, String) {
   case r0, r {
     Ok(Nil), Ok(Nil)          -> r0
@@ -86,8 +111,9 @@ pub fn main() {
   use r0 <- promise.await(build(bundle_asset()))
   use r1 <- promise.await(build(app_assets()))
   use r2 <- promise.await(build(pages_assets()))
+  use r3 <- promise.await(build(components_assets()))
 
-  [r0, r1, r2]
+  [r0, r1, r2, r3]
   |> list.fold(Ok(Nil), fold_result)
   |> result.map_error(fn (e) { io.println_error(e) })
   |> promise.resolve

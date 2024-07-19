@@ -2,6 +2,7 @@ import gleam/list
 import gleam/result
 import wechat/object.{type JsObject}
 import wechat/page.{run_page}
+import wechat/component.{run_component}
 import wechat/app as weapp
 
 import app/app
@@ -26,4 +27,10 @@ pub fn page(ps: List(#(String, Constructor)), p: String) -> Result(Nil, Nil) {
   ps
   |> list.find(fn(px) { px.0 == p })
   |> result.try(fn(px) { px.1() |> run_page |> Ok})
+}
+
+pub fn component(ps: List(#(String, Constructor)), p: String) -> Result(Nil, Nil) {
+  ps
+  |> list.find(fn(px) { px.0 == p })
+  |> result.try(fn(px) { px.1() |> run_component |> Ok})
 }
