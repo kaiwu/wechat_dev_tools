@@ -2,7 +2,10 @@
   "name": "gleam-wechat-dev-tools",
   "version": "0.1.0",
   "description": "build wechat miniprogram with gleam",
-  "scripts": {},
+  "scripts": {
+    "build": "gleam run -m build",
+    "clean": "rm -rf dist/*"
+  },
   "author": "Kai WU",
   "license": "MIT",
   "dependencies": {
