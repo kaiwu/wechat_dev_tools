@@ -1,13 +1,13 @@
-import {build} from 'esbuild'
+import { build } from 'esbuild'
+import { lessLoader } from 'esbuild-plugin-less';
 
-export async function bundle_build(es, out, min) {
+export async function bundle_build(entry, out) {
   await build({
-    entryPoints: es,
+    entryPoints: [entry],
     bundle: true,
-    minify: min,
+    minify: true,
     format: 'esm',
-    outdir: out,
-    allowOverwrite: true,
+    outfile: out,
   })
 }
 
@@ -16,11 +16,35 @@ export async function js_build(js, out) {
     stdin: {
       contents: js,
       loader: 'js',
-    }
+    },
     bundle: false,
     minify: false,
     format: 'esm',
     outfile: out,
-    allowOverwrite: true,
+  })
+}
+
+export async function wxml_build(wxml, out) {
+  await build({
+    entryPoints: [wxml],
+    loader: 'txt',
+    outfile: out,
+  })
+}
+
+export async function json_build(json, out) {
+  await build({
+    entryPoints: [json],
+    loader: 'json',
+    outfile: out,
+  })
+}
+
+export async function less_build(css, out) {
+  await build({
+    entryPoints: [css],
+    plugins: [lessLoader()],
+    loader: 'css',
+    outfile: out,
   })
 }
