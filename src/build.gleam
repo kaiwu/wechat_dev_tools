@@ -64,9 +64,11 @@ fn pages_assets() -> List(Asset) {
 }
 
 fn fold_result(r0: Result(Nil, String), r: Result(Nil, String)) -> Result(Nil, String) {
-  case r {
-    Ok(Nil) -> r0
-    Error(_) -> r
+  case r0, r {
+    Ok(Nil), Ok(Nil)          -> r0
+    Error(_), Ok(Nil)         -> r0
+    Ok(Nil), Error(_)         -> r
+    Error(e1), Error(e2)      -> Error(e1 <> e2)
   }
 }
 
@@ -87,6 +89,6 @@ pub fn main() {
 
   [r0, r1, r2]
   |> list.fold(Ok(Nil), fold_result)
-  |> result.map_error(fn (e) { io.println(e) })
+  |> result.map_error(fn (e) { io.println_error(e) })
   |> promise.resolve
 }

@@ -4,52 +4,68 @@ import { lessLoader } from 'esbuild-plugin-less';
 
 export function bundle_build(entry, out) {
   return new Promise(resolve => {
-    let b = build({
-      entryPoints: [entry],
-      bundle: true,
-      minify: true,
-      format: 'esm',
-      outfile: out,
-    })
-    resolve(new Ok(undefined))
+    try {
+      let b = build({
+        entryPoints: [entry],
+        bundle: true,
+        minify: true,
+        format: 'esm',
+        outfile: out,
+      })
+      resolve(new Ok(undefined))
+    } catch (e) {
+      resolve(new Error("bundle build error"))
+    }
   })
 }
 
 export function js_build(js, out) {
   return new Promise(resolve => {
-    let b = build({
-      stdin: {
-        contents: js,
-        loader: 'js',
-      },
-      bundle: false,
-      minify: false,
-      format: 'esm',
-      outfile: out,
-    })
-    resolve(new Ok(undefined))
+    try {
+      let b = build({
+        stdin: {
+          contents: js,
+          loader: 'js',
+        },
+        bundle: false,
+        minify: false,
+        format: 'esm',
+        outfile: out,
+      })
+      resolve(new Ok(undefined))
+    } catch (e) {
+      resolve(new Error("js build error"))
+    }
   })
 }
 
 export function copy_build(src, out) {
   return new Promise(resolve => {
-    let b = build({
-      entryPoints: [src],
-      loader: {'.wxml': 'copy', '.json': 'copy'},
-      outfile: out,
-    })
-    resolve(new Ok(undefined))
+    try {
+      let b = build({
+        entryPoints: [src],
+        loader: {'.wxml': 'copy', '.json': 'copy'},
+        outfile: out,
+      })
+      resolve(new Ok(undefined))
+    } catch (e) {
+      resolve(new Error("copy build error"))
+    }
   })
 }
 
 export function less_build(css, out) {
   return new Promise(resolve => {
-    let b = build({
-      entryPoints: [css],
-      plugins: [lessLoader()],
-      loader: {'.less': 'css'},
-      outfile: out,
-    })
-    resolve(new Ok(undefined))
+    try {
+      let b = build({
+        entryPoints: [css],
+        plugins: [lessLoader()],
+        loader: {'.less': 'css'},
+        outfile: out,
+      })
+      resolve(new Ok(undefined))
+    } catch (e) {
+      resolve(new Error("less build error"))
+    }
   })
 }
