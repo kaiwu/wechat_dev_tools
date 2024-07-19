@@ -2,7 +2,6 @@
 # You typically do not need to edit this file
 
 packages = [
-  { name = "esgleam", version = "0.6.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "simplifile"], otp_app = "esgleam", source = "hex", outer_checksum = "571D149ACFB7C7A81CF8C7A70ECFDA5A084ADBF706962353C0DA85787CB4DD24" },
   { name = "filepath", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "filepath", source = "hex", outer_checksum = "EFB6FF65C98B2A16378ABC3EE2B14124168C0CE5201553DE652E2644DCFDB594" },
   { name = "gleam_javascript", version = "0.11.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_javascript", source = "hex", outer_checksum = "483631D3001FCE8EB12ADEAD5E1B808440038E96F93DA7A32D326C82F480C0B2" },
   { name = "gleam_json", version = "2.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_json", source = "hex", outer_checksum = "CB10B0E7BF44282FB25162F1A24C1A025F6B93E777CCF238C4017E4EEF2CDE97" },
@@ -10,12 +9,10 @@ packages = [
   { name = "gleamyshell", version = "2.0.1", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleamyshell", source = "hex", outer_checksum = "14AE384BC6CBE520A0FCC790B44B2A5A94921E5C7BE67713CDCF07A7663D3ACD" },
   { name = "gleeunit", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "F7A7228925D3EE7D0813C922E062BFD6D7E9310F0BEE585D3A42F3307E3CFD13" },
   { name = "json", version = "1.4.1", build_tools = ["mix"], requirements = [], otp_app = "json", source = "hex", outer_checksum = "9ABF218DBE4EA4FCB875E087D5F904EF263D012EE5ED21D46E9DBCA63F053D16" },
-  { name = "simplifile", version = "1.7.0", build_tools = ["gleam"], requirements = ["filepath", "gleam_stdlib"], otp_app = "simplifile", source = "hex", outer_checksum = "1D5DFA3A2F9319EC85825F6ED88B8E449F381B0D55A62F5E61424E748E7DDEB0" },
   { name = "wechat", version = "0.1.0", build_tools = ["gleam"], requirements = ["gleam_javascript", "gleam_json", "gleam_stdlib", "json"], source = "local", path = "../wechat" },
 ]
 
 [requirements]
-esgleam = { version = ">= 0.6.0 and < 1.0.0"}
 filepath = { version = ">= 1.0.0 and < 2.0.0" }
 gleam_javascript = { version = ">= 0.11.0 and < 1.0.0" }
 gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
