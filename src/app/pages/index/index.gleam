@@ -1,8 +1,9 @@
 import gleam/io
+import gleam/string
 import wechat/object.{type JsObject}
 
 fn on_load(o: JsObject) -> Nil {
-  o |> object.stringify |> io.println
+  o |> object.stringify |> string.append("hello gleam: ", _) |> io.println
 }
 
 fn on_show() -> Nil {

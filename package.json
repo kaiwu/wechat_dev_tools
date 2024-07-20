@@ -5,7 +5,8 @@
   "scripts": {
     "build": "gleam run -m build",
     "watch": "WECHAT_BUILD_WATCH=1 gleam run -m build",
-    "clean": "gleam clean && rm -rf dist/*"
+    "purge": "gleam clean && rm -rf dist/*",
+    "clean": "rm -rf dist/*"
   },
   "author": "Kai WU",
   "license": "MIT",

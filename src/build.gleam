@@ -95,8 +95,8 @@ fn component_content(p: String) -> String {
 
 fn bundle_asset(watch: Bool) -> List(Asset) {
   case watch {
-    True -> [Asset(entry, dist <> "bundle.mjs", bundle_watch)]
-    False -> [Asset(entry, dist <> "bundle.mjs", bundle_build)]
+    True -> [Asset(entry, dist <> "bundle.mjs.js", bundle_watch)]
+    False -> [Asset(entry, dist <> "bundle.mjs.js", bundle_build)]
   }
 }
 
