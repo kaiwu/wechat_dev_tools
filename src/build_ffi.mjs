@@ -53,9 +53,10 @@ export function copy_build(src, out) {
 
 export function less_build(css, out) {
   return new Promise(resolve => {
+      let less = lessLoader({math:'always'}, {})
       build({
         entryPoints: [css],
-        plugins: [lessLoader()],
+        plugins: [less],
         loader: {'.less': 'css'},
         outfile: out,
       }).then(function(r){
@@ -126,9 +127,10 @@ export function copy_watch(src, out) {
 
 export function less_watch(css, out) {
   return new Promise(resolve => {
+      let less = lessLoader({math:'always'}, {})
       context({
         entryPoints: [css],
-        plugins: [lessLoader()],
+        plugins: [less],
         loader: {'.less': 'css'},
         outfile: out,
       }).then(function(ctx){
