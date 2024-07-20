@@ -1,7 +1,11 @@
 # wechat_dev_tools
 
+[![Package Version](https://img.shields.io/hexpm/v/wechat_dev_tools)](https://hex.pm/packages/wechat_dev_tools)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/wechat_dev_tools/)
+
 Develop wechat miniprograms in [gleam](https://gleam.run).
-It uses [esbuild]() and [esbuild-plugin-less]() to build `*.json`, `*.wxml` and `.wxss` files
+
+It uses [esbuild](https://esbuild.github.io/) and [esbuild-plugin-less](https://github.com/iam-medvedev/esbuild-plugin-less) to build `*.json`, `*.wxml` and `.wxss` files
 
 ```sh
 $ git clone https://github.com/kaiwu/wechat_dev_tools.git your-project
