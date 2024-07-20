@@ -1,6 +1,6 @@
 {
   "name": "gleam-wechat-dev-tools",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "build wechat miniprogram with gleam",
   "scripts": {
     "build": "gleam run -m build",
