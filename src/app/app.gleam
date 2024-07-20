@@ -11,9 +11,6 @@ fn on_show(_o: JsObject) -> Nil {
 }
 
 pub fn app() -> JsObject {
-  object.literal([
-    #("onLaunch", on_launch),
-    #("onShow", on_show),
-  ])
+  object.literal([#("onLaunch", on_launch), #("onShow", on_show)])
   |> object.set("data", object.new())
 }
