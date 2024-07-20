@@ -3,6 +3,7 @@ import gleam/list
 import gleam/string
 import gleam/result
 import gleam/javascript/promise.{type Promise}
+import envoy
 import bundle
 
 @external(javascript, "./build_ffi.mjs", "bundle_build")
@@ -16,6 +17,18 @@ pub fn copy_build(json f: String, outfile o: String) -> Promise(Result(Nil, Stri
 
 @external(javascript, "./build_ffi.mjs", "less_build")
 pub fn less_build(less f: String, outfile o: String) -> Promise(Result(Nil, String))
+
+@external(javascript, "./build_ffi.mjs", "bundle_watch")
+pub fn bundle_watch(entry f: String, outfile o: String) -> Promise(Result(Nil, String))
+
+@external(javascript, "./build_ffi.mjs", "js_watch")
+pub fn js_watch(content c: String, outfile o: String) -> Promise(Result(Nil, String))
+
+@external(javascript, "./build_ffi.mjs", "copy_watch")
+pub fn copy_watch(json f: String, outfile o: String) -> Promise(Result(Nil, String))
+
+@external(javascript, "./build_ffi.mjs", "less_watch")
+pub fn less_watch(less f: String, outfile o: String) -> Promise(Result(Nil, String))
 
 const entry = "./build/dev/javascript/wechat_dev_tools/bundle.mjs"
 const app_content = "import { app } from './bundle.mjs'; app()"
@@ -52,40 +65,60 @@ fn component_content(p: String) -> String {
   ])
 }
 
-fn bundle_asset() -> List(Asset) {
-  [ Asset(entry, dist <> "bundle.mjs", bundle_build) ]
+fn bundle_asset(watch: Bool) -> List(Asset) {
+  case watch {
+    True -> [ Asset(entry, dist <> "bundle.mjs", bundle_watch) ]
+    False -> [ Asset(entry, dist <> "bundle.mjs", bundle_build) ]
+  }
 }
 
-fn app_assets() -> List(Asset) {
-  [ Asset(app_content, dist <> "app.js", js_build),
-    Asset(src <> "app.json", dist <> "app.json", copy_build),
-    Asset(src <> "app.less", dist <> "app.wxss", less_build) ]
+fn app_assets(watch: Bool) -> List(Asset) {
+  case watch {
+    True  -> [ Asset(app_content, dist <> "app.js", js_watch),
+               Asset(src <> "app.json", dist <> "app.json", copy_watch),
+               Asset(src <> "app.less", dist <> "app.wxss", less_watch) ]
+    False -> [ Asset(app_content, dist <> "app.js", js_build),
+               Asset(src <> "app.json", dist <> "app.json", copy_build),
+               Asset(src <> "app.less", dist <> "app.wxss", less_build) ]
+  }
 }
 
-fn page_assets(p: String) -> List(Asset) {
-  [ Asset(page_content(p), file_path(dist <> "/pages/", p, "js"), js_build),
-    Asset(file_path(src <> "/pages/", p, "json"), file_path(dist <> "/pages/", p, "json"), copy_build),
-    Asset(file_path(src <> "/pages/", p, "wxml"), file_path(dist <> "/pages/", p, "wxml"), copy_build),
-    Asset(file_path(src <> "/pages/", p, "less"), file_path(dist <> "/pages/", p, "wxss"), less_build) ]
+fn page_assets(p: String, watch: Bool) -> List(Asset) {
+  case watch {
+    True  -> [ Asset(page_content(p), file_path(dist <> "/pages/", p, "js"), js_watch),
+               Asset(file_path(src <> "pages/", p, "json"), file_path(dist <> "/pages/", p, "json"), copy_watch),
+               Asset(file_path(src <> "pages/", p, "wxml"), file_path(dist <> "/pages/", p, "wxml"), copy_watch),
+               Asset(file_path(src <> "pages/", p, "less"), file_path(dist <> "/pages/", p, "wxss"), less_watch) ]
+    False -> [ Asset(page_content(p), file_path(dist <> "/pages/", p, "js"), js_build),
+               Asset(file_path(src <> "pages/", p, "json"), file_path(dist <> "/pages/", p, "json"), copy_build),
+               Asset(file_path(src <> "pages/", p, "wxml"), file_path(dist <> "/pages/", p, "wxml"), copy_build),
+               Asset(file_path(src <> "pages/", p, "less"), file_path(dist <> "/pages/", p, "wxss"), less_build) ]
+  }
 }
 
-fn pages_assets() -> List(Asset) {
+fn pages_assets(watch: Bool) -> List(Asset) {
   bundle.pages()
   |> list.map(fn(p) { p.0 })
-  |> list.flat_map(fn(p) { page_assets(p) })
+  |> list.flat_map(fn(p) { page_assets(p, watch) })
 }
 
-fn component_assets(p: String) -> List(Asset) {
-  [ Asset(component_content(p), index_path(dist <> "/components/", p, "js"), js_build),
-    Asset(file_path(src <> "/components/", p, "json"), index_path(dist <> "/components/", p, "json"), copy_build),
-    Asset(file_path(src <> "/components/", p, "wxml"), index_path(dist <> "/components/", p, "wxml"), copy_build),
-    Asset(file_path(src <> "/components/", p, "less"), index_path(dist <> "/components/", p, "wxss"), less_build) ]
+fn component_assets(p: String, watch: Bool) -> List(Asset) {
+  case watch {
+    True  -> [ Asset(component_content(p), index_path(dist <> "/components/", p, "js"), js_watch),
+               Asset(file_path(src <> "components/", p, "json"), index_path(dist <> "/components/", p, "json"), copy_watch),
+               Asset(file_path(src <> "components/", p, "wxml"), index_path(dist <> "/components/", p, "wxml"), copy_watch),
+               Asset(file_path(src <> "components/", p, "less"), index_path(dist <> "/components/", p, "wxss"), less_watch) ]
+    False -> [ Asset(component_content(p), index_path(dist <> "/components/", p, "js"), js_build),
+               Asset(file_path(src <> "components/", p, "json"), index_path(dist <> "/components/", p, "json"), copy_build),
+               Asset(file_path(src <> "components/", p, "wxml"), index_path(dist <> "/components/", p, "wxml"), copy_build),
+               Asset(file_path(src <> "components/", p, "less"), index_path(dist <> "/components/", p, "wxss"), less_build) ]
+  }
 }
 
-fn components_assets() -> List(Asset) {
+fn components_assets(watch: Bool) -> List(Asset) {
   bundle.components()
   |> list.map(fn(p) { p.0 })
-  |> list.flat_map(fn(p) { component_assets(p) })
+  |> list.flat_map(fn(p) { component_assets(p, watch) })
 }
 
 fn fold_result(r0: Result(Nil, String), r: Result(Nil, String)) -> Result(Nil, String) {
@@ -108,10 +141,13 @@ fn build(ass: List(Asset)) -> Promise(Result(Nil, String)) {
 }
 
 pub fn main() {
-  use r0 <- promise.await(build(bundle_asset()))
-  use r1 <- promise.await(build(app_assets()))
-  use r2 <- promise.await(build(pages_assets()))
-  use r3 <- promise.await(build(components_assets()))
+  let watch = envoy.get("WECHAT_BUILD_WATCH")
+              |> result.is_ok
+              
+  use r0 <- promise.await(build(bundle_asset(watch)))
+  use r1 <- promise.await(build(app_assets(watch)))
+  use r2 <- promise.await(build(pages_assets(watch)))
+  use r3 <- promise.await(build(components_assets(watch)))
 
   [r0, r1, r2, r3]
   |> list.fold(Ok(Nil), fold_result)
