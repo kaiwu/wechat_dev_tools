@@ -17,8 +17,8 @@ links = [{ title = "Wechat Miniprogram", href = "https://developers.weixin.qq.co
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
 gleam_javascript = ">= 0.11.0 and < 1.0.0"
-wechat = { path = "../wechat" }
 envoy = ">= 1.0.1 and < 2.0.0"
+weapp = ">= 1.0.0 and < 2.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
