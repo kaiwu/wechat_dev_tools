@@ -76,7 +76,7 @@ export function bundle_watch(entry, out) {
         outfile: out,
       }).then(function(ctx){
         ctx.watch()
-        console.log("watching bundle...")
+        console.log(`watching bundle ${entry}...`)
       }).then(function(){
         resolve(new Ok(undefined))
       }).catch(function(e){

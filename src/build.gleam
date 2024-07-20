@@ -86,13 +86,13 @@ fn app_assets(watch: Bool) -> List(Asset) {
 fn page_assets(p: String, watch: Bool) -> List(Asset) {
   case watch {
     True  -> [ Asset(page_content(p), file_path(dist <> "/pages/", p, "js"), js_watch),
-               Asset(file_path(src <> "pages/", p, "json"), file_path(dist <> "/pages/", p, "json"), copy_watch),
-               Asset(file_path(src <> "pages/", p, "wxml"), file_path(dist <> "/pages/", p, "wxml"), copy_watch),
-               Asset(file_path(src <> "pages/", p, "less"), file_path(dist <> "/pages/", p, "wxss"), less_watch) ]
+               Asset(file_path(src <> "pages/", p, "json"), file_path(dist <> "pages/", p, "json"), copy_watch),
+               Asset(file_path(src <> "pages/", p, "wxml"), file_path(dist <> "pages/", p, "wxml"), copy_watch),
+               Asset(file_path(src <> "pages/", p, "less"), file_path(dist <> "pages/", p, "wxss"), less_watch) ]
     False -> [ Asset(page_content(p), file_path(dist <> "/pages/", p, "js"), js_build),
-               Asset(file_path(src <> "pages/", p, "json"), file_path(dist <> "/pages/", p, "json"), copy_build),
-               Asset(file_path(src <> "pages/", p, "wxml"), file_path(dist <> "/pages/", p, "wxml"), copy_build),
-               Asset(file_path(src <> "pages/", p, "less"), file_path(dist <> "/pages/", p, "wxss"), less_build) ]
+               Asset(file_path(src <> "pages/", p, "json"), file_path(dist <> "pages/", p, "json"), copy_build),
+               Asset(file_path(src <> "pages/", p, "wxml"), file_path(dist <> "pages/", p, "wxml"), copy_build),
+               Asset(file_path(src <> "pages/", p, "less"), file_path(dist <> "pages/", p, "wxss"), less_build) ]
   }
 }
 
@@ -105,13 +105,13 @@ fn pages_assets(watch: Bool) -> List(Asset) {
 fn component_assets(p: String, watch: Bool) -> List(Asset) {
   case watch {
     True  -> [ Asset(component_content(p), index_path(dist <> "/components/", p, "js"), js_watch),
-               Asset(file_path(src <> "components/", p, "json"), index_path(dist <> "/components/", p, "json"), copy_watch),
-               Asset(file_path(src <> "components/", p, "wxml"), index_path(dist <> "/components/", p, "wxml"), copy_watch),
-               Asset(file_path(src <> "components/", p, "less"), index_path(dist <> "/components/", p, "wxss"), less_watch) ]
+               Asset(file_path(src <> "components/", p, "json"), index_path(dist <> "components/", p, "json"), copy_watch),
+               Asset(file_path(src <> "components/", p, "wxml"), index_path(dist <> "components/", p, "wxml"), copy_watch),
+               Asset(file_path(src <> "components/", p, "less"), index_path(dist <> "components/", p, "wxss"), less_watch) ]
     False -> [ Asset(component_content(p), index_path(dist <> "/components/", p, "js"), js_build),
-               Asset(file_path(src <> "components/", p, "json"), index_path(dist <> "/components/", p, "json"), copy_build),
-               Asset(file_path(src <> "components/", p, "wxml"), index_path(dist <> "/components/", p, "wxml"), copy_build),
-               Asset(file_path(src <> "components/", p, "less"), index_path(dist <> "/components/", p, "wxss"), less_build) ]
+               Asset(file_path(src <> "components/", p, "json"), index_path(dist <> "components/", p, "json"), copy_build),
+               Asset(file_path(src <> "components/", p, "wxml"), index_path(dist <> "components/", p, "wxml"), copy_build),
+               Asset(file_path(src <> "components/", p, "less"), index_path(dist <> "components/", p, "wxss"), less_build) ]
   }
 }
 
