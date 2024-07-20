@@ -8,6 +8,7 @@ target = "javascript"
 #
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "kaiwu", repo = "wechat_dev_tools" }
+gleam = ">= 0.32.0"
 # links = [{ title = "Website", href = "" }]
 #
 # For a full reference of all the available options, you can have a look at
