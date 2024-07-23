@@ -1,6 +1,6 @@
 name = "wechat_dev_tools"
 version = "1.0.0"
-description = "tools to develop wechat miniprogram in gleam"
+description = "Tools to develop wechat miniprogram in gleam"
 target = "javascript"
 
 # Fill out these fields if you intend to generate HTML documentation or publish
